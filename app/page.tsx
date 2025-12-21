@@ -9,7 +9,7 @@ export default function HomePage() {
     <main className="w-full overflow-x-hidden">
       {/* ================= HERO ================= */}
       <section className="relative h-[95vh] w-full">
-        <img src="https://images.unsplash.com/photo-1548013146-72479768bada" alt="Himachal Mountains" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/hpimage.jpeg" alt="Himachal Mountains" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-black/50" />
 
         <div className="relative z-10 flex h-full items-center justify-center px-6 text-center text-white">
