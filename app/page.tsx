@@ -1,3 +1,5 @@
+import ExploreTabs from './components/ExploreTabs'
+
 // app/page.tsx
 export const metadata = {
   title: 'ExploreHimachal – Discover Stays, Mountains & Experiences',
@@ -24,7 +26,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+      <ExploreTabs />
       {/* ================= DESTINATIONS ================= */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -48,7 +50,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* ================= STAYS ================= */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
@@ -77,7 +78,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* ================= EXPERIENCES ================= */}
       <section className="py-24 bg-black text-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -101,7 +101,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* ================= WHY US ================= */}
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
@@ -115,7 +114,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* ================= FINAL CTA ================= */}
       <section className="py-24 bg-gradient-to-r from-gray-900 to-black text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
