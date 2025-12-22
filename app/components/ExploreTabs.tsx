@@ -113,12 +113,61 @@ const MOCK_RESULTS = [
   }
 ]
 
+type ResultItem = {
+  id: number
+  city: string
+  type: string
+  title: string
+  price: string
+  desc: string
+}
+
+function DetailsModal({ item, onClose }: { item: ResultItem | null; onClose: () => void }) {
+  if (!item) return null
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+      <div className="relative w-full max-w-xl rounded-3xl bg-white p-8 shadow-2xl">
+        {/* Close */}
+        <button onClick={onClose} className="absolute right-5 top-5 text-gray-500 hover:text-black">
+          ✕
+        </button>
+
+        {/* Content */}
+        <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
+
+        <p className="text-sm text-gray-500 mb-4">
+          {item.city} • {item.type.toUpperCase()}
+        </p>
+
+        <p className="text-gray-700 mb-6">{item.desc}</p>
+
+        <div className="flex items-center justify-between mb-6">
+          <span className="text-xl font-semibold text-black">{item.price}</span>
+        </div>
+
+        {/* CTA */}
+        <div className="flex gap-4">
+          <button className="flex-1 rounded-full bg-black py-3 text-white font-semibold hover:bg-gray-900">Book Now</button>
+
+          <button onClick={onClose} className="flex-1 rounded-full border py-3 font-semibold hover:bg-gray-50">
+            Close
+          </button>
+        </div>
+
+        <p className="mt-4 text-xs text-center text-gray-400">Local verified partner • No advance payment</p>
+      </div>
+    </div>
+  )
+}
+
 /* ===================== COMPONENT ===================== */
 
 export default function ExploreTabs() {
   const [city, setCity] = useState('Dharamshala')
   const [selected, setSelected] = useState<string[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [activeItem, setActiveItem] = useState<ResultItem | null>(null)
 
   const toggle = (id: string) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]))
@@ -205,7 +254,9 @@ export default function ExploreTabs() {
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-black">{item.price}</span>
 
-                      <button className="rounded-full bg-black px-4 py-2 text-sm text-white hover:bg-gray-900">View Details</button>
+                      <button onClick={() => setActiveItem(item)} className="rounded-full bg-black px-4 py-2 text-sm text-white hover:bg-gray-900">
+                        View Details
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -214,6 +265,7 @@ export default function ExploreTabs() {
           </div>
         )}
       </div>
+      <DetailsModal item={activeItem} onClose={() => setActiveItem(null)} />
     </section>
   )
 }
