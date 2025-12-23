@@ -122,6 +122,17 @@ type ResultItem = {
   desc: string
 }
 
+const CITY_EXPERIENCE_MAP: Record<string, string[]> = {
+  Dharamshala: ['guide', 'food', 'hotel', 'taxi'],
+  Shimla: ['hotel', 'taxi', 'food'],
+  Manali: ['hotel', 'taxi', 'trek', 'paragliding'],
+  Kullu: ['trek', 'guide', 'taxi'],
+  Mandi: ['guide', 'food'],
+  Spiti: ['trek', 'guide'],
+  Kasol: ['hotel', 'food', 'trek'],
+  Bir: ['paragliding', 'guide', 'hotel']
+}
+
 function DetailsModal({ item, onClose }: { item: ResultItem | null; onClose: () => void }) {
   if (!item) return null
 
@@ -174,6 +185,7 @@ export default function ExploreTabs() {
   }
 
   const results = MOCK_RESULTS.filter((item) => item.city === city && selected.includes(item.type))
+  const availableExperiences = EXPERIENCES.filter((exp) => CITY_EXPERIENCE_MAP[city]?.includes(exp.id))
 
   return (
     <section className="py-24 bg-gray-50">
