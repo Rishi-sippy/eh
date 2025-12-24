@@ -7,20 +7,18 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { email, password, tenant } = body
+    const { email, password, tenant } = await req.json()
 
     if (!email || !password || !tenant) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
 
-    const existing = await prisma.user.findUnique({
-      where: { email }
-    })
-
+    const existing = await prisma.user.findUnique({ where: { email } })
     if (existing) {
       return NextResponse.json({ error: 'User already exists' }, { status: 409 })
     }
+
+    const safeTenant = tenant.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Date.now()
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -28,11 +26,11 @@ export async function POST(req: NextRequest) {
       data: {
         email,
         password: hashedPassword,
-        tenant
+        tenant: safeTenant
       }
     })
 
-    const res = NextResponse.json({ success: true })
+    const res = NextResponse.json({ success: true, tenant: user.tenant })
 
     res.cookies.set('session', user.id, {
       httpOnly: true,
