@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { PrismaClient } from '@prisma/client/extension'
+import prisma from '../../../../prisma/client'
 
 export async function POST(req: NextRequest) {
   const { email, password, tenant } = await req.json()
@@ -9,14 +9,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
   }
 
-  const existing = await PrismaClient.user.findUnique({ where: { email } })
+  const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) {
     return NextResponse.json({ error: 'User already exists' }, { status: 409 })
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const user = await PrismaClient.user.create({
+  const user = await prisma.user.create({
     data: {
       email,
       password: hashedPassword,
