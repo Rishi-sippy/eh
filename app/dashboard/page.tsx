@@ -1,34 +1,23 @@
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import prisma from '../../prisma/client'
+import { getTenant } from '../../lib/getTenant'
 
 export default async function DashboardPage() {
-  const session = (await cookies()).get('session')?.value
-
-  if (!session) {
-    redirect('/login')
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { id: session }
-  })
-
-  if (!user) {
-    redirect('/login')
-  }
+  const tenant = getTenant()
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <h1 className="text-3xl font-bold mb-4">Welcome to Dashboard</h1>
+    <main className="min-h-screen bg-gray-50">
+      <section className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <h1 className="text-3xl font-bold">Dashboard</h1>
 
-      <div className="rounded-xl bg-white p-6 shadow">
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Tenant:</strong> {user.tenant}
-        </p>
-      </div>
-    </div>
+          {tenant ? (
+            <p className="mt-2 text-gray-600">
+              Workspace: <strong>{tenant}.explorehimachal.com</strong>
+            </p>
+          ) : (
+            <p className="mt-2 text-gray-600">Default workspace</p>
+          )}
+        </div>
+      </section>
+    </main>
   )
 }
