@@ -51,9 +51,9 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link href="/stays">Stays</Link>
+            <Link href="/Stays">Stays</Link>
             <Link href="/experiences">Experiences</Link>
-            <Link href="/treks">Treks</Link>
+            {/* <Link href="/treks">Treks</Link> */}
             <Link href="/guides">Travel Guides</Link>
           </nav>
 
