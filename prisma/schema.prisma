@@ -17,10 +17,12 @@ model User {
 model PropertyLead {
   id           String   @id @default(cuid())
   name         String
-  phone        String
   email        String
+  phone        String
   propertyName String
   city         String
   propertyType String
+
   createdAt    DateTime @default(now())
 }
+

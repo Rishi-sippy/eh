@@ -23,10 +23,30 @@ export default function ListPropertyModal({ open, onClose }: Props) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(form)
-    onClose()
+
+    try {
+      const res = await fetch('/api/property', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed to submit property')
+      }
+
+      // optional: success toast later
+      console.log('Property submitted successfully')
+
+      onClose()
+    } catch (error) {
+      console.error(error)
+      alert('Something went wrong. Please try again.')
+    }
   }
 
   return (
