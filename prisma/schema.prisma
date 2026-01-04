@@ -11,6 +11,16 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   password  String
-  tenant    String
+  tenant    String   @unique
   createdAt DateTime @default(now())
+}
+model PropertyLead {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String
+  email        String
+  propertyName String
+  city         String
+  propertyType String
+  createdAt    DateTime @default(now())
 }

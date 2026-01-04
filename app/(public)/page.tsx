@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react'
-import ExploreTabs from './components/ExploreTabs'
-import TripPlannerFlow from './components/flows/TripPlannerFlow'
-import StayFinderFlow from './components/flows/StayFinderFlow'
-import ExperienceFlow from './components/flows/ExperienceFlow'
-import PropertyFlow from './components/flows/PropertyFlow'
+import ExploreTabs from '../components/ExploreTabs'
+import TripPlannerFlow from '../components/flows/TripPlannerFlow'
+import StayFinderFlow from '../components/flows/StayFinderFlow'
+import ExperienceFlow from '../components/flows/ExperienceFlow'
+import PropertyFlow from '../components/flows/PropertyFlow'
 
 // export const metadata = {
 //   title: 'ExploreHimachal – The Operating System for Himachal Tourism',

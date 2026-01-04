@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import prisma from '../../../../prisma/client'
-
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
-
+import prisma from '../../../../lib/prisma'
 export async function POST(req: NextRequest) {
   try {
     const { email, password, tenant } = await req.json()
@@ -18,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'User already exists' }, { status: 409 })
     }
 
-    const safeTenant = tenant.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Date.now()
+    const safeTenant = tenant.toLowerCase().replace(/[^a-z0-9]/g, '-')
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -30,17 +26,17 @@ export async function POST(req: NextRequest) {
       }
     })
 
-    const res = NextResponse.json({ success: true, tenant: user.tenant })
+    const res = NextResponse.json({ success: true })
 
     res.cookies.set('session', user.id, {
       httpOnly: true,
-      path: '/',
-      sameSite: 'lax'
+      sameSite: 'lax',
+      path: '/'
     })
 
     return res
-  } catch (err) {
-    console.error('SIGNUP ERROR:', err)
+  } catch (e) {
+    console.error(e)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
