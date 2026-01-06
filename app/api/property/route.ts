@@ -31,3 +31,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
+export async function GET() {
+  const leads = await prisma.propertyLead.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
+
+  return NextResponse.json(leads)
+}

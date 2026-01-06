@@ -1,23 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import prisma from '../../../../../lib/prisma'
 
-export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await context.params
-    const { status } = await request.json()
+export async function POST(req: Request, { params }: { params: { id: string } }) {
+  const { status } = await req.json()
 
-    if (!['APPROVED', 'REJECTED'].includes(status)) {
-      return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
-    }
+  await prisma.propertyLead.update({
+    where: { id: params.id },
+    data: { status }
+  })
 
-    const updated = await prisma.propertyLead.update({
-      where: { id },
-      data: { status }
-    })
-
-    return NextResponse.json(updated)
-  } catch (error) {
-    console.error(error)
-    return NextResponse.json({ error: 'Failed to update property status' }, { status: 500 })
-  }
+  return NextResponse.json({ success: true })
 }
