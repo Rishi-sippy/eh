@@ -12,8 +12,10 @@ model User {
   email     String   @unique
   password  String
   tenant    String   @unique
+  role      String   @default("ADMIN") // SUPERADMIN | ADMIN
   createdAt DateTime @default(now())
 }
+
 model PropertyLead {
   id           String   @id @default(cuid())
   name         String

@@ -9,8 +9,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
 
   async function handleLogin() {
+    // TEMP DEV BYPASS
+    if (process.env.NODE_ENV === 'development' && email === 'sippyrishu@gmail.com') {
+      router.push('/dashboard')
+      return
+    }
+
     const res = await fetch('/api/auth/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     })
 
