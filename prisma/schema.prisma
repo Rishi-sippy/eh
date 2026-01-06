@@ -26,3 +26,16 @@ model PropertyLead {
   createdAt    DateTime @default(now())
 }
 
+model TripRequest {
+  id          String   @id @default(cuid())
+  destination String
+  tripType    String
+  startDate   DateTime
+  endDate     DateTime
+  travellers  String
+  budget      String
+  phone       String
+  email       String
+  status      String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  createdAt   DateTime @default(now())
+}
