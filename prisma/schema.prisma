@@ -22,9 +22,10 @@ model PropertyLead {
   propertyName String
   city         String
   propertyType String
-
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
   createdAt    DateTime @default(now())
 }
+
 
 model TripRequest {
   id          String   @id @default(cuid())
@@ -39,3 +40,5 @@ model TripRequest {
   status      String   @default("PENDING") // PENDING | APPROVED | REJECTED
   createdAt   DateTime @default(now())
 }
+
+

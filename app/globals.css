@@ -36,3 +36,6 @@ body {
 .input:focus {
   border-color: black;
 }
+.dashboard-layout ~ nav {
+  display: none;
+}
