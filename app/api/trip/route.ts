@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '../../../lib/prisma'
+
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
@@ -27,5 +28,19 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('TRIP REQUEST ERROR:', err)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
+  }
+}
+
+/* ✅ THIS WAS MISSING */
+export async function GET() {
+  try {
+    const trips = await prisma.tripRequest.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+
+    return NextResponse.json(trips)
+  } catch (err) {
+    console.error('GET TRIPS ERROR:', err)
+    return NextResponse.json([], { status: 500 })
   }
 }
