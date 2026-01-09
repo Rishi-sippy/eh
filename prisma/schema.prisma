@@ -24,9 +24,13 @@ model PropertyLead {
   propertyName String
   city         String
   propertyType String
-  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+
+  images       String[] // ✅ URLs only
+
+  status       String   @default("PENDING")
   createdAt    DateTime @default(now())
 }
+
 
 
 model TripRequest {
