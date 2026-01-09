@@ -1,13 +1,19 @@
-import { NextResponse, NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import prisma from '../../../../../lib/prisma'
-export async function POST(req: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params
-  const { status } = await req.json()
 
-  await prisma.propertyLead.update({
-    where: { id },
-    data: { status }
-  })
+export async function POST(req: NextRequest, context: { params: { id: string } }) {
+  try {
+    const { status } = await req.json()
+    const { id } = context.params
 
-  return NextResponse.json({ success: true })
+    await prisma.propertyLead.update({
+      where: { id },
+      data: { status }
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json({ error: 'Update failed' }, { status: 500 })
+  }
 }

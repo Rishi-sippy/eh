@@ -34,3 +34,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
   }
 }
+export async function GET() {
+  try {
+    const leads = await prisma.propertyLead.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+
+    return NextResponse.json(leads)
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 })
+  }
+}
