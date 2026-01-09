@@ -23,7 +23,7 @@ const menu = [
   },
   {
     name: 'Leads',
-    href: '/dashboard/leads',
+    href: '/dashboard/trips',
     icon: Users
   },
   {
